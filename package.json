@@ -1,0 +1,28 @@
+{
+  "name": "Employee-Summary-Template-Engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianneewell1/Employee-Summary-Template-Engine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brianneewell1/Employee-Summary-Template-Engine/issues"
+  },
+  "homepage": "https://github.com/brianneewell1/Employee-Summary-Template-Engine#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "inquirer": "^7.3.3",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
