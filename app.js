@@ -1,7 +1,6 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const questions = require("./questions");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -11,6 +10,93 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const questions(){
+    inquirer.prompt([
+		{//Name
+		type: 'input',
+		message: 'Enter employee first and last name',
+		name: 'Name',
+		validate: function(name) {
+			let pass = name.match(/^[a-zA-Z]+ [a-zA-Z]+$/g);
+			if (pass) {
+				return true;
+			}
+
+			return 'Please enter a valid first and last name.';
+		}
+	},
+    {
+		//Email
+		type: 'input',
+		message: 'Enter employee email',
+		name: 'email',
+		validate: function(email) {
+			let pass = email.match(/\S+@\S+\.\S+/g);
+			if (pass) {
+				return true;
+			}
+
+			return 'Please enter a valid email.';
+		},
+    },
+    {
+		//Id
+		type: 'id',
+		message: 'Enter employee id',
+		name: 'id',
+		validate: function(id) {
+			if (id) {
+				return true;
+			}
+
+			return 'Please enter a valid id.';
+		},
+	]).then((response) => {
+        switch (response.role){
+            case "Engineer":
+                inquirer.prompt({
+		//Github Username
+		type: 'input',
+		message: 'Enter your github username',
+		name: 'github',
+		validate: function(github) {
+			if (github) {
+				return true;
+			}
+
+			return 'A github username is required';
+		},
+    }
+}).then((answer) => {
+    employees.push(new Engineer(response.name, response.id, response.email, response.role, answer.github));
+    askAgain()
+});
+	{
+		//School name
+		type: 'input',
+		message: 'Enter the name of your school',
+		name: 'school',
+		validate: function(school) {
+			if (school) {
+				return true;
+			}
+
+			return 'A school name is required';
+		},
+    },
+    {
+		//Office Number
+		type: 'input',
+		message: 'Enter the office number',
+		name: 'officeNumber',
+		validate: function(officeNumber) {
+			if (officeNumber) {
+				return true;
+			}
+
+			return 'An office number is required';
+		},
+	};
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
