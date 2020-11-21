@@ -44,9 +44,9 @@ const questions = [
 		//Github Username
 		type: 'input',
 		message: 'Enter your github username',
-		name: 'username',
-		validate: function(username) {
-			if (username) {
+		name: 'github',
+		validate: function(github) {
+			if (github) {
 				return true;
 			}
 
