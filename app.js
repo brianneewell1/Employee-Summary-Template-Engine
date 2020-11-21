@@ -14,46 +14,47 @@ const employees = [];
 
 questions();
 
-function questions(){
+function questions() {
     inquirer.prompt([
-		{//Name
-		type: 'input',
-		message: 'Enter employee first and last name',
-		name: 'Name',
-		validate: function(name) {
-			let pass = name.match(/^[a-zA-Z]+ [a-zA-Z]+$/g);
-			if (pass) {
-				return true;
-			}
+        {//Name
+            type: 'input',
+            message: 'Enter employee first and last name',
+            name: 'Name',
+            validate: function (name) {
+                let pass = name.match(/^[a-zA-Z]+ [a-zA-Z]+$/g);
+                if (pass) {
+                    return true;
+                }
 
-			return 'Please enter a valid first and last name.';
-		}
-	},
-    {
-		//Email
-		type: 'input',
-		message: 'Enter employee email',
-		name: 'email',
-		validate: function(email) {
-			let pass = email.match(/\S+@\S+\.\S+/g);
-			if (pass) {
-				return true;
-			}
+                return 'Please enter a valid first and last name.';
+            }
+        },
+        {
+            //Email
+            type: 'input',
+            message: 'Enter employee email',
+            name: 'email',
+            validate: function (email) {
+                let pass = email.match(/\S+@\S+\.\S+/g);
+                if (pass) {
+                    return true;
+                }
 
-			return 'Please enter a valid email.';
-		},
-    },
-    {
-		//Id
-		type: 'id',
-		message: 'Enter employee id',
-		name: 'id',
-		validate: function(id) {
-			if (id) {
-				return true;
-			}
+                return 'Please enter a valid email.';
+            },
+        },
+        {
+            //Id
+            type: 'id',
+            message: 'Enter employee id',
+            name: 'id',
+            validate: function (id) {
+                if (id) {
+                    return true;
+                }
 
-			return 'Please enter a valid id.';
+                return 'Please enter a valid id.';
+            }
         },
         {
             type: 'list',
@@ -62,90 +63,93 @@ function questions(){
             choices: ['Manager', 'Engineer', 'Intern']
         }
         //Question for Engineer
-	]).then((response) => {
-        switch (response.role){
+    ]).then((response) => {
+        switch (response.role) {
             case "Engineer":
                 inquirer.prompt({
-		//Github Username
-		type: 'input',
-		message: 'Enter your github username',
-		name: 'github',
-		validate: function(github) {
-			if (github) {
-				return true;
-			}
+                    //Github Username
+                    type: 'input',
+                    message: 'Enter your github username',
+                    name: 'github',
+                    validate: function (github) {
+                        if (github) {
+                            return true;
+                        }
 
-			return 'A github username is required';
-		},
-    }).then((answer) => {
-    employees.push(new Engineer(response.name, response.id, response.email, response.role, answer.github));
-    addAnother()
-});
-break;
+                        return 'A github username is required';
+                    },
+                }).then((answer) => {
+                    employees.push(new Engineer(response.name, response.id, response.email, response.role, answer.github));
+                    addAnother()
+                });
+                break;
 
-//Question for Intern
-case "Intern":
-    inquirer.prompt({     
-		//School name
-		type: 'input',
-		message: 'Enter the name of your school',
-		name: 'school',
-		validate: function(school) {
-			if (school) {
-				return true;
-			}
+            //Question for Intern
+            case "Intern":
+                inquirer.prompt({
+                    //School name
+                    type: 'input',
+                    message: 'Enter the name of your school',
+                    name: 'school',
+                    validate: function (school) {
+                        if (school) {
+                            return true;
+                        }
 
-			return 'A school name is required';
-		},
-    }).then((answer) => {
-        employees.push(new Intern(response.name, response.id, response.email, response.role, answer.school));
-    addAnother()
-    });
-    break;
-    
-    //Question for Manager
-    case "Manager":
-    inquirer.prompt({
-		//Office Number
-		type: 'input',
-		message: 'Enter the office number',
-		name: 'officeNumber',
-		validate: function(officeNumber) {
-			if (officeNumber) {
-				return true;
-			}
+                        return 'A school name is required';
+                    },
+                }).then((answer) => {
+                    employees.push(new Intern(response.name, response.id, response.email, response.role, answer.school));
+                    addAnother()
+                });
+                break;
 
-			return 'An office number is required';
-		},
-	}).then((answer) => {
-        employees.push(new Manager(response.name, response.id, response.email, response.role, answer.officeNumber));
-    addAnother()
-    });
-    
-    break;
-}
+            //Question for Manager
+            case "Manager":
+                inquirer.prompt({
+                    //Office Number
+                    type: 'input',
+                    message: 'Enter the office number',
+                    name: 'officeNumber',
+                    validate: function (officeNumber) {
+                        if (officeNumber) {
+                            return true;
+                        }
 
-function addAnother(){
-    inquirer.prompt([
-        {
-            type: 'confirm',
-            name: 'another',
-            message: "Do you want to add another employee?"
+                        return 'An office number is required';
+                    },
+                }).then((answer) => {
+                    employees.push(new Manager(response.name, response.id, response.email, response.role, answer.officeNumber));
+                    addAnother()
+                });
+
+                break;
         }
-    ]).then((response) => {
-        if (response.another === true) {
-questions();}
-else {
-    printEmployees();
-}
-    })
+})
 };
 
-function printEmployees() {
-    fs.writeFile('./output/team.html', render(employees), function (err) {
-        if (err) throw err;
-    })
-};
+    function addAnother() {
+        inquirer.prompt([
+            {
+                type: 'confirm',
+                name: 'another',
+                message: "Do you want to add another employee?"
+            }
+        ]).then((response) => {
+            if (response.another === true) {
+                questions();
+            }
+            else {
+                printEmployees();
+            }
+        })
+    };
+
+    function printEmployees() {
+        fs.writeFile('./output/team.html', render(employees), function (err) {
+            if (err) throw err;
+        })
+    };
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -172,4 +176,4 @@ function printEmployees() {
 
 //start a function
 //array with the id's and team members
-//inquirer.prompt function (study that)
+//inquirer.prompt function (study that) 
