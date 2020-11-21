@@ -1,3 +1,4 @@
+const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -19,7 +20,7 @@ function questions() {
         {//Name
             type: 'input',
             message: 'Enter employee first and last name',
-            name: 'Name',
+            name: 'name',
             validate: function (name) {
                 let pass = name.match(/^[a-zA-Z]+ [a-zA-Z]+$/g);
                 if (pass) {
