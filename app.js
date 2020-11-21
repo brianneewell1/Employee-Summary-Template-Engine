@@ -50,7 +50,14 @@ const questions(){
 			}
 
 			return 'Please enter a valid id.';
-		},
+        },
+        {
+            type: 'list',
+            name: 'role',
+            message: 'What type of employee would you like to add?',
+            choices: ['Manager', 'Engineer', 'Intern']
+        }
+        //Question for Engineer
 	]).then((response) => {
         switch (response.role){
             case "Engineer":
@@ -66,12 +73,15 @@ const questions(){
 
 			return 'A github username is required';
 		},
-    }
-}).then((answer) => {
+    }).then((answer) => {
     employees.push(new Engineer(response.name, response.id, response.email, response.role, answer.github));
-    askAgain()
+    
 });
-	{
+break;
+
+//Question for Intern
+case "Intern":
+    inquirer.prompt({     
 		//School name
 		type: 'input',
 		message: 'Enter the name of your school',
@@ -83,8 +93,15 @@ const questions(){
 
 			return 'A school name is required';
 		},
-    },
-    {
+    }).then((answer) => {
+        employees.push(new Intern(response.name, response.id, response.email, response.role, answer.school));
+    
+    });
+    break;
+    
+    //Question for Manager
+    case "Manager":
+    inquirer.prompt({
 		//Office Number
 		type: 'input',
 		message: 'Enter the office number',
@@ -96,7 +113,13 @@ const questions(){
 
 			return 'An office number is required';
 		},
-	};
+	}).then((answer) => {
+        employees.push(new Manager(response.name, response.id, response.email, response.role, answer.officeNumber));
+    
+    });
+
+    break;
+}
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
